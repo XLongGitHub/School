@@ -3,6 +3,8 @@ package user;
 import com.opensymphony.xwork2.ActionSupport;
 import database.DB;
 
+import java.sql.SQLException;
+
 public class UserAction extends ActionSupport {
     private String phone;
     private String password;
@@ -15,8 +17,12 @@ public class UserAction extends ActionSupport {
      */
     public boolean isUser(String phone, String password) {
         String sql = "SELECT * FROM s_user WHERE phone = '" + phone + "' and password = '" + PersonUtil.EncoderBySHA(password) +"' ";
-        if (DB.execute(sql) != null)
-            return true;
+        try {
+            if (DB.executeQuery(sql).next())
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return  false;
     }
 
@@ -30,7 +36,7 @@ public class UserAction extends ActionSupport {
 
     public String register() {
         String sql =  "insert into s_user (phone, password) values ('" + phone +"' , '" + PersonUtil.EncoderBySHA(password) + "')";
-        if (DB.execute(sql) != null) {
+        if (DB.executeUpdate(sql)) {
             return "success";
         } else {
             return "error";
