@@ -6,11 +6,11 @@ DROP TABLE IF EXISTS `s_user`;
 CREATE TABLE `s_user`(
   `id` int(11) PRIMARY KEY AUTO_INCREMENT,
   #   `student_number` int(11) NOT NULL ,
-  `name` VARCHAR(20) COMMENT '姓名' NOT NULL ,
+  `name` VARCHAR(20) COMMENT '姓名' NOT NULL DEFAULT '用户',
   `sex` TINYINT,
   `address` VARCHAR(60),
   `password` VARCHAR(60) NOT NULL ,
-  `grade` INT(4) COMMENT '管理员9， 学生1， 教师2' NOT NULL,
+  `grade` INT(4) COMMENT '管理员9， 学生1， 教师2' NOT NULL DEFAULT 0,
   `phone` VARCHAR(60),
   `avactor` VARCHAR(60),
   `create_time` VARCHAR(20),
