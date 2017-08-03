@@ -43,6 +43,7 @@ public class DB {
     }
 
     public static boolean executeUpdate(String sql) {
+        System.out.println(sql);
         try {
             pstmt = getConn().prepareStatement(sql);
             if (pstmt.executeUpdate() != 0) {
