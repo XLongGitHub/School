@@ -1,5 +1,6 @@
 package user;
 
+import PersonUtil.Util;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import database.DB;
@@ -103,7 +104,7 @@ public class UserAction extends ActionSupport{
      * @return
      */
     public boolean isUser(String phone, String password) {
-        String sql = "SELECT * FROM s_user WHERE phone = '" + phone + "' and password = '" + PersonUtil.EncoderBySHA(password) +"' ";
+        String sql = "SELECT * FROM s_user WHERE phone = '" + phone + "' and password = '" + Util.EncoderBySHA(password) +"' ";
         try {
             if (DB.executeQuery(sql).next())
                 return true;
@@ -142,7 +143,7 @@ public class UserAction extends ActionSupport{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String sql =  "insert into s_user (phone, password, create_time) values ('" + phone +"' , '" + PersonUtil.EncoderBySHA(password) + "' ,'"+ df.format(new Date()) +"')";
+        String sql =  "insert into s_user (phone, password, create_time) values ('" + phone +"' , '" + Util.EncoderBySHA(password) + "' ,'"+ df.format(new Date()) +"')";
         if (DB.executeUpdate(sql)) {
             return "register_success";
         } else {
