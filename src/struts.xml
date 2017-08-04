@@ -49,6 +49,14 @@
             <result name="modifyClassroom_success">success.jsp</result>
             <result name="modifyClassroom_error">error.jsp</result>
         </action>
+
+        <action name="*SchooltimeAction" class="schooltime.SchooltimeAction" method="{1}">
+            <result name="addSchooltime">WEB-INF/content/schooltime/addSchooltime.jsp</result>
+            <result name="modifySchooltime">WEB-INF/content/schooltime/modifySchooltime.jsp</result>
+            <result name="showSchooltime">WEB-INF/content/schooltime/showSchooltime.jsp</result>
+            <result name="success">success.jsp</result>
+            <result name="error">error.jsp</result>
+        </action>
     </package>
 
 </struts>
