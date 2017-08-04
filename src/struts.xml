@@ -43,6 +43,11 @@
             <result name="addClassroom_success">success.jsp</result>
             <result name="addClassroom_error">error.jsp</result>
             <result name="error">error.jsp</result>
+            <result name="success">success.jsp</result>
+            <result name="showClassroom">WEB-INF/content/classroom/showClassroom.jsp</result>
+            <result name="modifyClassroom">WEB-INF/content/classroom/modifyClassroom.jsp</result>
+            <result name="modifyClassroom_success">success.jsp</result>
+            <result name="modifyClassroom_error">error.jsp</result>
         </action>
     </package>
 

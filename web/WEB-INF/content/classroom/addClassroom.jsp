@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>添加教室信息</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <form action="addClassroomAction" method="post" role="form" class="form-horizontal">
