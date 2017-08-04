@@ -31,6 +31,11 @@
             <result name="addCourse_error">error.jsp</result>
             <result name="error">error.jsp</result>
             <result name="getCourse_success">/WEB-INF/content/course/showCourse.jsp</result>
+            <result name="modifyCourse">/WEB-INF/content/course/modifyCourse.jsp</result>
+            <result name="modifyCourse_success">success.jsp</result>
+            <result name="modifyCourse_error">error.jsp</result>
+            <result name="deleteCourse_success">success.jsp</result>
+            <result name="deleteCourse_error">error.jsp</result>
         </action>
     </package>
 
