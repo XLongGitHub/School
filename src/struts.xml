@@ -29,6 +29,8 @@
             <result name="add">WEB-INF/content/course/addCourse.jsp</result>
             <result name="addCourse_success">success.jsp</result>
             <result name="addCourse_error">error.jsp</result>
+            <result name="error">error.jsp</result>
+            <result name="getCourse_success">/WEB-INF/content/course/showCourse.jsp</result>
         </action>
     </package>
 
