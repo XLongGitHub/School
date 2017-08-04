@@ -21,6 +21,8 @@
             <result name="modify_error">error.jsp</result>
             <result name="modify_detail">modify_userInfo.jsp</result>
             <result name="users_success">usersInfo.jsp</result>
+            <result name="delete_user_success">success.jsp</result>
+            <result name="delete_user_error">error.jsp</result>
         </action>
     </package>
 

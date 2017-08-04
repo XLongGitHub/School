@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class UserAction extends ActionSupport {
+public class UserAction extends ActionSupport{
     private String phone;
     private String password;
     private String name;
@@ -113,6 +113,11 @@ public class UserAction extends ActionSupport {
         return  false;
     }
 
+    /**
+     * 用户登陆判断
+     * @return
+     * @throws Exception
+     */
     public String login() throws Exception {
         if (isUser(phone, password)) {
             ActionContext ac = ActionContext.getContext();
@@ -124,6 +129,10 @@ public class UserAction extends ActionSupport {
         }
     }
 
+    /**
+     * 用户注册
+     * @return
+     */
     public String register() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String sqlget = "select * from s_user where phone = '" + phone + "'";
@@ -233,9 +242,25 @@ public class UserAction extends ActionSupport {
             e.printStackTrace();
         }
         return "users_success";
-//        if (rs.next())
     }
 
+    /**
+     * 删除用户
+     * param 电话号码
+     * @return
+     */
+    public String deleteUser() {
+        //拿到get请求参数
+        Map request = (Map) ActionContext.getContext().get("request");
+        String u_phone = (String) request.get("phone");
+        String sql = "delete from s_user where phone = '"+ u_phone+"'";
+        if(DB.executeUpdate(sql)) {
+            return "delete_user_success";
+        } else {
+            return "delete_user_error";
+        }
+
+    }
     private static String fillEmpty(String str) {
         if (str == null) {
             str = "empty";
