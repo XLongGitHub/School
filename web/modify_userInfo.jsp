@@ -22,7 +22,7 @@
         background: #eee;
     }
 </style>
-<form action="modifyAction" method="post" role="form" class="form-horizontal">
+<form action="modifyUserAction" method="post" role="form" class="form-horizontal">
     <div class="form-group">
         <label for="name" class="col-sm-3 control-label">姓名:</label>
         <div class="col-sm-8">

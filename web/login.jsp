@@ -55,10 +55,10 @@
     }
     var targetForm = document.forms[0];
     function login() {
-        targetForm.action = "loginAction";
+        targetForm.action = "loginUserAction";
     }
     function register() {
-        targetForm.action = "registerAction";
+        targetForm.action = "registerUserAction";
     }
 </script>
 </body>
