@@ -12,20 +12,35 @@ import java.util.Map;
 
 public class SchooltimeAction {
     private int id;
+    private int date;
     private String time;
+    private int week_start;
+    private int week_end;
     private String create_time;
     private String write_time;
     private List<Schooltime> schooltimes;
-
     class Schooltime {
         private int id;
+        private int date;
         private String time;
+        private int week_start;
+        private int week_end;
         private String create_time;
         private String write_time;
 
         public Schooltime(int id, String time, String create_time, String write_time) {
             this.id = id;
             this.time = time;
+            this.create_time = create_time;
+            this.write_time = write_time;
+        }
+
+        public Schooltime(int id, int date, String time, int week_start, int week_end, String create_time, String write_time) {
+            this.id = id;
+            this.date = date;
+            this.time = time;
+            this.week_start = week_start;
+            this.week_end = week_end;
             this.create_time = create_time;
             this.write_time = write_time;
         }
@@ -61,13 +76,37 @@ public class SchooltimeAction {
         public void setWrite_time(String write_time) {
             this.write_time = write_time;
         }
+
+        public int getDate() {
+            return date;
+        }
+
+        public void setDate(int date) {
+            this.date = date;
+        }
+
+        public int getWeek_start() {
+            return week_start;
+        }
+
+        public void setWeek_start(int week_start) {
+            this.week_start = week_start;
+        }
+
+        public int getWeek_end() {
+            return week_end;
+        }
+
+        public void setWeek_end(int week_end) {
+            this.week_end = week_end;
+        }
     }
 
     public String add() {
         if (time == null) {
             return "addSchooltime";
         }
-        String sql = "insert into s_schooltime (time, create_time) values ('" + time + "','" + Util.getCurrentTime() + "' )";
+        String sql = "insert into s_schooltime (date, time, week_start, week_end, create_time) values ("+date +",'"+ time + "',"+week_start+ ","+week_end+ ",'" + Util.getCurrentTime() + "' )";
         if (DB.executeUpdate(sql)) {
             return "success";
         } else {
@@ -177,4 +216,27 @@ public class SchooltimeAction {
         this.schooltimes = schooltimes;
     }
 
+    public int getDate() {
+        return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
+
+    public int getWeek_start() {
+        return week_start;
+    }
+
+    public void setWeek_start(int week_start) {
+        this.week_start = week_start;
+    }
+
+    public int getWeek_end() {
+        return week_end;
+    }
+
+    public void setWeek_end(int week_end) {
+        this.week_end = week_end;
+    }
 }

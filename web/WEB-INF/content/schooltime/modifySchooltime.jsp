@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>修改上课时间</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <s:iterator value="schooltimes">

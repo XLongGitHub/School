@@ -1,6 +1,7 @@
 .idea/*
 lib/*
 out/*
+data/*
 *.iml
 note.md
 project.md

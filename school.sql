@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS `school`;
 CREATE  DATABASE `school`;
 USE `school`;
+
 # 用户
 DROP TABLE IF EXISTS `s_user`;
 CREATE TABLE `s_user`(
@@ -43,6 +44,7 @@ DROP TABLE IF EXISTS `s_classroom`;
 CREATE TABLE `s_classroom` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(20),
+  `empty` TINYINT(4) COMMENT '',
   `create_time` VARCHAR(20),
   `write_time` VARCHAR(20)
 );
@@ -51,7 +53,10 @@ CREATE TABLE `s_classroom` (
 DROP TABLE IF EXISTS `s_schooltime`;
 CREATE TABLE `s_schooltime` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT,
-  `time` VARCHAR(40),
+  `date` TINYINT(4) COMMENT '星期',
+  `time` VARCHAR(40) COMMENT '上课时间',
+  `week_start` TINYINT(4) COMMENT '上课开始周',
+  `week_end` TINYINT(4) COMMENT '上课结束周',
   `create_time` VARCHAR(20),
   `write_time` VARCHAR(20)
 );
