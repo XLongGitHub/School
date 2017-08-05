@@ -153,8 +153,10 @@ public class SchooltimeAction {
             if (fill(rs, schooltimes) != null)
                 return "modifySchooltime";
         } else {
-            String sql = "update s_schooltime set date = " + date + ", time = '" + time + "', week_start = "+ week_start+", " +
-                    "week_end = " + week_end + ", write_time = '" + Util.getCurrentTime() + "' where id = " + id;
+            String sql = "update s_schooltime set date = " + date + ", time = " + time + ", week_start = "+ week_start+", " +
+                    "week_end = " + week_end + ", " +
+                    "`desc` = '" + desc +
+                    "' ,write_time = '" + Util.getCurrentTime() + "' where id = " + id;
             if (DB.executeUpdate(sql)) {
                 return "success";
             } else {

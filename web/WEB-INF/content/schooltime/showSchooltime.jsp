@@ -28,8 +28,8 @@
 
     <s:iterator value="schooltimes">
         <tr>
-            <td><s:property value="date"/> </td>
-            <td><s:property value="time"/> </td>
+            <td class="date"><s:property value="date"/> </td>
+            <td class="time"><s:property value="time"/> </td>
             <td><s:property value="week_start"/> </td>
             <td><s:property value="week_end"/> </td>
             <td><s:property value="desc"/> </td>
@@ -43,9 +43,62 @@
                     删除
                 </a>
             </td>
-        </tr>
+         </tr> 
     </s:iterator>
 </table>
+
+<script>
+window.onload = function() {
+    var date = document.querySelectorAll(".date");
+    date.forEach(item => {
+        switch (item.innerText) {
+            case '1':
+                item.innerText = "星期一";
+                break;
+            case '2':
+                item.innerText = "星期二";
+                break;
+            case '3':
+                item.innerText = "星期三";
+                break;
+            case '4':
+                item.innerText = "星期四";
+                break;
+            case '5':
+                item.innerText = "星期五";
+                break;
+            case '6':
+                item.innerText = "星期六";
+                break;
+            case '7':
+                item.innerText = "星期日";
+                break;
+            default:
+                console.log("no");
+        } 
+    });
+    var time = document.querySelectorAll(".time");
+    time.forEach(item => {
+        switch (item.innerText) {
+             case '1':
+                    item.innerHTML = "8:00 - 9:40";
+                    break;
+                case '2':
+                    item.innerHTML = "10:00 - 11:40";
+                    break;
+                case '3':
+                    item.innerHTML = "14:00 - 15:40";
+                    break;
+                case '4':
+                    item.innerHTML = "16:00 - 17:40";
+                    break;
+                case '5':
+                    item.innerHTML = "19:00 - 20:40";
+                    break;
+        }
+    })
+}
+</script>
 
 </body>
 </html>
