@@ -32,7 +32,7 @@
         <div class="">
             <select name="date">
                 <option value="">请选择星期几</option>
-                <option value="0">星期日</option>
+                <option value="7">星期日</option>
                 <option value="1">星期一</option>
                 <option value="2">星期二</option>
                 <option value="3">星期三</option>
@@ -92,12 +92,74 @@
             </select>
         </div>
     </div>
-        <div class="form-group">
+    <div class="form-group">
         <div class="controls">
             <input type="submit" class="btn-primary" value="添加"/>
         </div>
     </div>
+    <br/>
+    <div class="form-group">
+        <label >描述</label>
+        <input type="text" id="desc" name="desc" style="width: 600px;" >
+    </div>
 </form>
+
+<script>
+    window.onload = function () {
+        var form = document.querySelector("form");
+        var date = document.querySelector("select[name=date]");
+        var time = document.querySelector("select[name=time]");
+        var week_start = document.querySelector("select[name=week_start]");
+        var week_end = document.querySelector("select[name=week_end]");
+        var desc = document.getElementById("desc");
+        var descStr = "";
+        form.onclick = function() {
+            descStr = "" ;
+            descStr += week_start.value;
+            descStr += " -- ";
+            descStr += week_end.value;
+            console.log(descStr);
+            descStr += " " + dateConvert(date.value);
+            console.log(descStr);
+            descStr += " " + timeConvert(time.value);
+            desc.value = descStr;
+        }
+
+        function dateConvert(date){
+            console.log(date);
+            console.log(typeof date);
+            console.log(date == 1);
+            console.log(date == "1");
+            var dateStr = "";
+            switch (date) {
+                case '1': dateStr = "星期一";break;
+                case '2': dateStr = "星期二";break;
+                case '3': dateStr = "星期三";break;
+                case '4': dateStr = "星期四";break;
+                case '5': dateStr = "星期五";break;
+                case '6': dateStr = "星期六";break;
+                case '7': dateStr = "星期日";break;
+                default:
+                    console.log("no");
+            }
+            console.log(dateStr);
+            return dateStr;
+        }
+
+         function timeConvert(time){
+            var timeStr = "";
+            switch (time) {
+                case '1': timeStr = "8:00 - 9:40";break;
+                case '2': timeStr = "10:00 - 11:40";break;
+                case '3': timeStr = "14:00 - 15:40";break;
+                case '4': timeStr = "16:00 - 17:40";break;
+                case '5': timeStr = "19:00 - 20:40";break;
+           }
+            return timeStr;
+        }
+
+    }
+</script>
 </body>
 </html>
 

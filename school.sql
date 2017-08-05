@@ -54,9 +54,11 @@ DROP TABLE IF EXISTS `s_schooltime`;
 CREATE TABLE `s_schooltime` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `date` TINYINT(4) COMMENT '星期',
-  `time` VARCHAR(40) COMMENT '上课时间',
+  `time` TINYINT(4) COMMENT '上课时间',
   `week_start` TINYINT(4) COMMENT '上课开始周',
   `week_end` TINYINT(4) COMMENT '上课结束周',
+  `desc` VARCHAR(255) COMMENT '描述',
   `create_time` VARCHAR(20),
   `write_time` VARCHAR(20)
 );
+

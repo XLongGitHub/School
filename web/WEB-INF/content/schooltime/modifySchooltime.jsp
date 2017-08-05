@@ -17,8 +17,8 @@
     <form action="modifySchooltimeAction" method="post" role="form" class="form-horizontal">
         <input type="text" name="id" value="<s:property value="id"/>" hidden="true" />
         <div class="form-group">
-            <h2><label for="time" class="col-sm-3 control-label">上课时间:</label></h2>
-            <div class="col-sm-8">
+            <label for="time" class="col-sm-3 control-label">上课时间:</label>
+            <div class="">
                 <input type="text" name="time" value="<s:property value="time"/>" id="time" class="form-control" />
             </div>
         </div>
