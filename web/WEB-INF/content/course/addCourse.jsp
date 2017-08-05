@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Xulong
@@ -19,15 +20,25 @@
         </div>
     </div>
     <div class="form-group">
-        <h2><label for="classroom_id" class="col-sm-3 control-label">教室:</label></h2>
-        <div class="col-sm-8">
-            <input type="text" name="classroom_id" value="" id="classroom_id" class="form-control"/>
-        </div>
+        <label class="col-sm-3 control-label">教室:</label>
+        <%--<div class="col-sm-8">--%>
+            <%--<input type="text" name="classroom_id" value="" id="classroom_id" class="form-control"/>--%>
+        <%--</div>--%>
+        <select name="classroom_id">
+            <s:iterator value="classrooms">
+                <option value="<s:property value="id"/> "><s:property value="name"/> </option>
+            </s:iterator>
+        </select>
     </div>
     <div class="form-group">
-        <h2><label for="schooltime_id" class="col-sm-3 control-label">上课时间:</label></h2>
+        <label class="col-sm-3 control-label">上课时间:</label>
         <div class="col-sm-8">
-            <input type="text" name="schooltime_id" value="" id="schooltime_id" class="form-control"/>
+            <%--<input type="text" name="schooltime_id" value="" id="schooltime_id" class="form-control"/>--%>
+            <select name="schooltime_id">
+                <s:iterator value="schooltimes">
+                    <option value="<s:property value="id"/>"> <s:property value="desc"/> </option>
+                </s:iterator>
+            </select>
         </div>
     </div>
 
