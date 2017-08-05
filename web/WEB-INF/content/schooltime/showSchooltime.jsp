@@ -16,7 +16,11 @@
 <table class="table  table-bordered">
     <caption>所有上课时间</caption>
     <tr>
+        <th>上课日</th>
         <th>上课时间</th>
+        <th>开始周</th>
+        <th>结束周</th>
+        <th>描述</th>
         <th>创建时间</th>
         <th>修改时间</th>
         <th>操作</th>
@@ -24,7 +28,11 @@
 
     <s:iterator value="schooltimes">
         <tr>
+            <td><s:property value="date"/> </td>
             <td><s:property value="time"/> </td>
+            <td><s:property value="week_start"/> </td>
+            <td><s:property value="week_end"/> </td>
+            <td><s:property value="desc"/> </td>
             <td><s:property value="create_time"/> </td>
             <td><s:property value="write_time"/> </td>
             <td>

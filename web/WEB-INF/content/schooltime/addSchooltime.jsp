@@ -12,23 +12,18 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
         form {
-            width:1000px;
-            margin:0 auto;
-            font-size:22px;
+            width: 1000px;
+            margin: 0 auto;
+            font-size: 22px;
             border: 1px solid deepskyblue;
         }
     </style>
 </head>
 <body>
 <form action="addSchooltimeAction" method="post" role="form" class="form-inline">
-    <%--<div class="form-group">--%>
-        <label class="control-label">上课时间:</label>
-        <%--<div class="">--%>
-            <%--<input type="text" name="time" value="" id="time" class="form-control" />--%>
-        <%--</div>--%>
-    <%--</div>--%>
+    <label class="control-label">上课时间:</label>
     <div class="form-group">
-         <label class="col-sm-3 control-label"></label> 
+        <label class="col-sm-3 control-label"></label>
         <div class="">
             <select name="date">
                 <option value="">请选择星期几</option>
@@ -99,8 +94,8 @@
     </div>
     <br/>
     <div class="form-group">
-        <label >描述</label>
-        <input type="text" id="desc" name="desc" style="width: 600px;" >
+        <label>描述</label>
+        <input type="text" id="desc" name="desc" style="width: 600px;">
     </div>
 </form>
 
@@ -113,8 +108,8 @@
         var week_end = document.querySelector("select[name=week_end]");
         var desc = document.getElementById("desc");
         var descStr = "";
-        form.onclick = function() {
-            descStr = "" ;
+        form.onclick = function () {
+            descStr = "";
             descStr += week_start.value;
             descStr += " -- ";
             descStr += week_end.value;
@@ -125,20 +120,34 @@
             desc.value = descStr;
         }
 
-        function dateConvert(date){
+        function dateConvert(date) {
             console.log(date);
             console.log(typeof date);
             console.log(date == 1);
             console.log(date == "1");
             var dateStr = "";
             switch (date) {
-                case '1': dateStr = "星期一";break;
-                case '2': dateStr = "星期二";break;
-                case '3': dateStr = "星期三";break;
-                case '4': dateStr = "星期四";break;
-                case '5': dateStr = "星期五";break;
-                case '6': dateStr = "星期六";break;
-                case '7': dateStr = "星期日";break;
+                case '1':
+                    dateStr = "星期一";
+                    break;
+                case '2':
+                    dateStr = "星期二";
+                    break;
+                case '3':
+                    dateStr = "星期三";
+                    break;
+                case '4':
+                    dateStr = "星期四";
+                    break;
+                case '5':
+                    dateStr = "星期五";
+                    break;
+                case '6':
+                    dateStr = "星期六";
+                    break;
+                case '7':
+                    dateStr = "星期日";
+                    break;
                 default:
                     console.log("no");
             }
@@ -146,15 +155,25 @@
             return dateStr;
         }
 
-         function timeConvert(time){
+        function timeConvert(time) {
             var timeStr = "";
             switch (time) {
-                case '1': timeStr = "8:00 - 9:40";break;
-                case '2': timeStr = "10:00 - 11:40";break;
-                case '3': timeStr = "14:00 - 15:40";break;
-                case '4': timeStr = "16:00 - 17:40";break;
-                case '5': timeStr = "19:00 - 20:40";break;
-           }
+                case '1':
+                    timeStr = "8:00 - 9:40";
+                    break;
+                case '2':
+                    timeStr = "10:00 - 11:40";
+                    break;
+                case '3':
+                    timeStr = "14:00 - 15:40";
+                    break;
+                case '4':
+                    timeStr = "16:00 - 17:40";
+                    break;
+                case '5':
+                    timeStr = "19:00 - 20:40";
+                    break;
+            }
             return timeStr;
         }
 
