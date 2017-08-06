@@ -13,14 +13,16 @@ public class CourseAction {
     private int id;
     private String name;
     private int classroom_id;
+    private String classroom_name;
     private int schooltime_id;
+    private String schooltime_desc;
     private String create_time;
     private String write_time;
     private List<Course> courses;
     private List<Schooltime> schooltimes;
     private List<Classroom> classrooms;
 
-    class Classroom{
+    class Classroom {
         private int id;
         private String name;
 
@@ -76,7 +78,9 @@ public class CourseAction {
         private int id;
         private String name;
         private int classroom_id;
+        private String classroom_name;
         private int schooltime_id;
+        private String schooltime_desc;
         private String create_time;
         private String write_time;
 
@@ -85,6 +89,17 @@ public class CourseAction {
             this.name = name;
             this.classroom_id = classroom_id;
             this.schooltime_id = schooltime_id;
+            this.create_time = create_time;
+            this.write_time = write_time;
+        }
+
+        public Course(int id, String name, int classroom_id, String classroom_name, int schooltime_id, String schooltime_desc, String create_time, String write_time) {
+            this.id = id;
+            this.name = name;
+            this.classroom_id = classroom_id;
+            this.classroom_name = classroom_name;
+            this.schooltime_id = schooltime_id;
+            this.schooltime_desc = schooltime_desc;
             this.create_time = create_time;
             this.write_time = write_time;
         }
@@ -135,6 +150,22 @@ public class CourseAction {
 
         public void setWrite_time(String write_time) {
             this.write_time = write_time;
+        }
+
+        public String getClassroom_name() {
+            return classroom_name;
+        }
+
+        public void setClassroom_name(String classroom_name) {
+            this.classroom_name = classroom_name;
+        }
+
+        public String getSchooltime_desc() {
+            return schooltime_desc;
+        }
+
+        public void setSchooltime_desc(String schooltime_desc) {
+            this.schooltime_desc = schooltime_desc;
         }
     }
 
@@ -189,11 +220,31 @@ public class CourseAction {
         if (name == null || name.equals("")) {
             System.out.println("but");
 //            if (request.containsKey("id")) {
-            int id = Integer.parseInt((String) request.get("id"));
-            String sql = "select * from s_course where id = " + id;
+            int id = (int) request.get("id");
+//            String sql = "select * from s_course where id = " + id;
+            String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc from (" +
+                    "s_course i left join s_classroom a on i.classroom_id = a.id and i.id = " + id + ")" +
+                    "left join s_schooltime b on i.schooltime_id = b.id";
             ResultSet rs = DB.executeQuery(sql);
-            if (fill(rs, courses) != null)
+            if (fill(rs, courses) != null) {
+                String sql3 = "select id, `desc` from s_schooltime";
+                String sql2 = "select id, name from s_classroom";
+                ResultSet rs3 = DB.executeQuery(sql3);
+                ResultSet rs2 = DB.executeQuery(sql2);
+                try {
+                    schooltimes = new LinkedList<>();
+                    while (rs3.next()) {
+                        schooltimes.add(new Schooltime(rs3.getInt("id"), rs3.getString("desc")));
+                    }
+                    classrooms = new LinkedList<>();
+                    while (rs2.next()) {
+                        classrooms.add(new Classroom(rs2.getInt("id"), rs2.getString("name")));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 return "modifyCourse";
+            }
 //            }
         } else {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -241,7 +292,9 @@ public class CourseAction {
      */
     public String get() {
         courses = new LinkedList<>();
-        String sql = "select * from s_course";
+//        String sql = "select * from s_course";
+        String sql = "select i.* , a.name as classroom_name, b.`desc` as schooltime_desc from (s_course i left join" +
+                " s_classroom a on a.id = i.classroom_id) left join s_schooltime b on b.id = i.schooltime_id";
         ResultSet rs = DB.executeQuery(sql);
         if (fill(rs, courses) != null)
             return "getCourse_success";
@@ -251,13 +304,15 @@ public class CourseAction {
     public List<Course> fill(ResultSet rs, List<Course> list) {
         try {
             while (rs.next()) {
-                int c_id = rs.getInt("id");
-                String c_name = rs.getString("name");
-                int c_classroom_id = rs.getInt("classroom_id");
-                int c_schooltime_id = rs.getInt("schooltime_id");
-                String c_create_time = rs.getString("create_time");
-                String c_write_time = rs.getString("write_time");
-                list.add(new Course(c_id, c_name, c_classroom_id, c_schooltime_id, c_create_time, c_write_time));
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int classroom_id = rs.getInt("classroom_id");
+                String classroom_name = rs.getString("classroom_name");
+                int schooltime_id = rs.getInt("schooltime_id");
+                String schooltime_desc = rs.getString("schooltime_desc");
+                String create_time = rs.getString("create_time");
+                String write_time = rs.getString("write_time");
+                list.add(new Course(id, name, classroom_id, classroom_name, schooltime_id, schooltime_desc, create_time, write_time));
             }
             return list;
         } catch (SQLException e) {
@@ -337,4 +392,21 @@ public class CourseAction {
     public void setClassrooms(List<Classroom> classrooms) {
         this.classrooms = classrooms;
     }
+
+    public String getClassroom_name() {
+        return classroom_name;
+    }
+
+    public void setClassroom_name(String classroom_name) {
+        this.classroom_name = classroom_name;
+    }
+
+    public String getSchooltime_desc() {
+        return schooltime_desc;
+    }
+
+    public void setSchooltime_desc(String schooltime_desc) {
+        this.schooltime_desc = schooltime_desc;
+    }
+
 }

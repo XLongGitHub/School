@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>添加课程</title>
+    <%--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--%>
 </head>
 <body>
 <form action="addCourseAction" method="post" role="form" class="form-horizontal">

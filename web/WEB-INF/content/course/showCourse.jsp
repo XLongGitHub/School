@@ -10,9 +10,10 @@
 <html>
 <head>
     <title>所有课程</title>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <%--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--%>
 </head>
 <body>
+<a href="addCourseAction">添加课程</a>
 <table class="table  table-bordered">
     <caption>所有课程</caption>
     <tr>
@@ -27,8 +28,10 @@
     <s:iterator value="courses">
         <tr>
             <td><s:property value="name"/> </td>
-            <td><s:property value="classroom_id"/> </td>
-            <td><s:property value="schooltime_id"/> </td>
+            <%--<td><s:property value="classroom_id"/> </td>--%>
+            <td><s:property value="classroom_name"/> </td>
+            <%--<td><s:property value="schooltime_id"/> </td>--%>
+            <td><s:property value="schooltime_desc"/> </td>
             <td><s:property value="create_time"/> </td>
             <td><s:property value="write_time"/> </td>
             <td>
