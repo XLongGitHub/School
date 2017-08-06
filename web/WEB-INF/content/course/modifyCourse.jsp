@@ -58,7 +58,7 @@
 
 <script>
     window.onload = function () {
-
+//       选中select
         var classroom_id = document.querySelector("input[name=classroom_id_old]");
         var schooltime_id = document.querySelector("input[name=schooltime_id_old");
         var classroom_ids = document.querySelector("select[name=classroom_id]");

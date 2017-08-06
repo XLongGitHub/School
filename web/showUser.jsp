@@ -13,6 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<a href="addUserAction">添加用户</a>
 <table class="table">
     <tr>
         <th>头像</th>
@@ -22,6 +23,7 @@
         <th>电话号码</th>
         <th>等级</th>
         <th>注册时间</th>
+        <th>操作</th>
     </tr>
     <%--<s:iterator value="users" id="user" status="us">--%>
         <%--<s:if test="(#us.index+1) / 7  == 0 && #us.index > 6">--%>
@@ -45,6 +47,10 @@
             <td><s:property value="u_phone"/> </td>
             <td><s:property value="u_grade"/> </td>
             <td><s:property value="u_create_time"/> </td>
+            <td>
+                <a href="modifyUserAction?id=<s:property value="id"/>&phone=<s:property value="u_phone"/>">修改</a>
+                <a href="deleteUserAction?id=<s:property value="id"/>&phone=<s:property value="u_phone"/>">删除</a>
+            </td>
         </tr>
     </s:iterator>
 </table>

@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class UserAction extends ActionSupport{
+    private int id;
     private String phone;
     private String password;
     private String name;
@@ -21,6 +22,7 @@ public class UserAction extends ActionSupport{
     private List<User> users = new LinkedList<>();
 
     class User {
+        private int id;
         private String u_name;
         private String u_avator;
         private String u_sex;
@@ -31,6 +33,17 @@ public class UserAction extends ActionSupport{
 
 
         public User(String u_name, String u_avator, String u_sex, String u_address, String u_phone, String u_grade, String u_create_time) {
+            this.u_name = u_name;
+            this.u_avator = u_avator;
+            this.u_sex = u_sex;
+            this.u_address = u_address;
+            this.u_phone = u_phone;
+            this.u_grade = u_grade;
+            this.u_create_time = u_create_time;
+        }
+
+        public User(int id, String u_name, String u_avator, String u_sex, String u_address, String u_phone, String u_grade, String u_create_time) {
+            this.id = id;
             this.u_name = u_name;
             this.u_avator = u_avator;
             this.u_sex = u_sex;
@@ -95,6 +108,14 @@ public class UserAction extends ActionSupport{
         public void setU_create_time(String u_create_time) {
             this.u_create_time = u_create_time;
         }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
     }
 
     /**
@@ -134,7 +155,9 @@ public class UserAction extends ActionSupport{
      * 用户注册
      * @return
      */
-    public String register() {
+    public String add() {
+        if (phone == null || phone.equals(""))
+            return "add";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String sqlget = "select * from s_user where phone = '" + phone + "'";
         try {
@@ -213,8 +236,8 @@ public class UserAction extends ActionSupport{
      * 根据条件查看所有用户
      * @return
      */
-    public String users() {
-        ResultSet usersSet =  DB.executeQuery("SELECT avactor,name,sex,address,phone, grade, create_time FROM s_user");
+    public String get() {
+        ResultSet usersSet =  DB.executeQuery("SELECT id,avactor,name,sex,address,phone, grade, create_time FROM s_user");
         try {
             while (usersSet.next()){
                 //map 根据key-value去去掉多余部分
@@ -225,7 +248,7 @@ public class UserAction extends ActionSupport{
 //                users.put("phone", usersSet.getString("phone"));
 //                users.put("grade", usersSet.getString("grade"));
 //                users.put("create_time", usersSet.getString("create_time"));
-
+                int id = usersSet.getInt("id");
                 String u_name = usersSet.getString("name");
                 String u_avator =   usersSet.getString("avactor");
                 String u_sex = "" + usersSet.getInt("sex");
@@ -333,4 +356,13 @@ public class UserAction extends ActionSupport{
     public List<User> getUsers() {
         return users;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }

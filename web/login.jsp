@@ -58,7 +58,7 @@
         targetForm.action = "loginUserAction";
     }
     function register() {
-        targetForm.action = "registerUserAction";
+        targetForm.action = "addUserAction";
     }
 </script>
 </body>

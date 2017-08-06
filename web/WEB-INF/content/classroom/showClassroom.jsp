@@ -13,7 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
+<a href="addClassroomAction">添加教室</a>
 <table class="table  table-bordered">
     <caption>所有教室</caption>
     <tr>
