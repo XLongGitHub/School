@@ -12,6 +12,7 @@
     <title>课程计划</title>
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <table class="table">
     <caption>选课</caption>
     <tr>

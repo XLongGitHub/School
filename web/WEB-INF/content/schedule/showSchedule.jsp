@@ -12,6 +12,7 @@
     <title>查看课程安排</title>
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <a href="addScheduleAction">添加课程</a>
 <table>
     <caption>查看课程安排</caption>

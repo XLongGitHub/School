@@ -13,6 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <style>
     * {
         margin: 0px;

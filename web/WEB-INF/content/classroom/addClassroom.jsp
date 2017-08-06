@@ -12,6 +12,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <form action="addClassroomAction" method="post" role="form" class="form-horizontal">
     <div class="form-group">
         <h2><label for="name" class="col-sm-3 control-label">教室</label></h2>

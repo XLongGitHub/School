@@ -13,6 +13,7 @@
         <%--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--%>
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <a href="addCourseAction">添加课程</a>
 <table class="table  table-bordered">
     <caption>所有课程</caption>

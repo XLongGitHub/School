@@ -10,9 +10,11 @@
 <html>
 <head>
     <title>教室信息</title>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <%--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--%>
+    <link href="${pageContext.request.contextPath}/css/bootstarp.min.css" rel="stylesheet">
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <a href="addClassroomAction">添加教室</a>
 <table class="table  table-bordered">
     <caption>所有教室</caption>

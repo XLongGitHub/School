@@ -20,6 +20,7 @@
     </style>
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <form action="addSchooltimeAction" method="post" role="form" class="form-inline">
     <label class="control-label">上课时间:</label>
     <div class="form-group">

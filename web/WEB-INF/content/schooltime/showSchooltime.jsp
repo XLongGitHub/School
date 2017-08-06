@@ -13,6 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <a href="addSchooltimeAction">添加上课时间安排</a>
 <table class="table  table-bordered">
     <caption>所有上课时间</caption>

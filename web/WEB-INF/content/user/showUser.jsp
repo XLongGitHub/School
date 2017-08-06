@@ -13,6 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <a href="addUserAction">添加用户</a>
 <table class="table">
     <tr>

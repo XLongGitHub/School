@@ -13,6 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <s:iterator value="schooltimes">
     <form action="modifySchooltimeAction" method="post" role="form" class="form-inline">
         <label class="control-label">上课时间:</label>

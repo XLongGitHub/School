@@ -12,6 +12,7 @@
     <title>个人信息中心</title>
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <style>
     * {
         margin: 0px;

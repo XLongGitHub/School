@@ -13,6 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<%@include file="../header.jsp" %>
 <s:iterator value="classrooms">
     <form action="modifyClassroomAction" method="post" role="form" class="form-horizontal">
         <input type="text" name="id" value="<s:property value="id"/>" hidden="true" />
