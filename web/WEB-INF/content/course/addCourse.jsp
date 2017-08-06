@@ -42,7 +42,16 @@
             </select>
         </div>
     </div>
-
+    <div class="form-group">
+        <label class="col-sm-3 control-label">教师</label>
+        <div class="col-sm-8">
+            <select name="teacher_id">
+                <s:iterator value="teachers">
+                    <option value="<s:property value="id"/>"> <s:property value="name"/> </option>
+                </s:iterator>
+            </select>
+        </div>
+    </div>
     <br/>
     <div class="form-group">
         <div class="controls">

@@ -20,6 +20,7 @@
         <th>课程名</th>
         <th>教室</th>
         <th>上课时间</th>
+        <th>教师</th>
         <th>创建时间</th>
         <th>修改时间</th>
         <th>操作</th>
@@ -32,6 +33,7 @@
             <td><s:property value="classroom_name"/> </td>
             <%--<td><s:property value="schooltime_id"/> </td>--%>
             <td><s:property value="schooltime_desc"/> </td>
+            <td><s:property value="teacher_name"/> </td>
             <td><s:property value="create_time"/> </td>
             <td><s:property value="write_time"/> </td>
             <td>

@@ -16,11 +16,40 @@ public class CourseAction {
     private String classroom_name;
     private int schooltime_id;
     private String schooltime_desc;
+    private int teacher_id;
+    private String teacher_name;
     private String create_time;
     private String write_time;
     private List<Course> courses;
     private List<Schooltime> schooltimes;
     private List<Classroom> classrooms;
+    private List<Teacher> teachers;
+
+    class Teacher {
+        private int id;
+        private String name;
+
+        public Teacher(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 
     class Classroom {
         private int id;
@@ -81,17 +110,10 @@ public class CourseAction {
         private String classroom_name;
         private int schooltime_id;
         private String schooltime_desc;
+        private int teacher_id;
+        private String teacher_name;
         private String create_time;
         private String write_time;
-
-        public Course(int id, String name, int classroom_id, int schooltime_id, String create_time, String write_time) {
-            this.id = id;
-            this.name = name;
-            this.classroom_id = classroom_id;
-            this.schooltime_id = schooltime_id;
-            this.create_time = create_time;
-            this.write_time = write_time;
-        }
 
         public Course(int id, String name, int classroom_id, String classroom_name, int schooltime_id, String schooltime_desc, String create_time, String write_time) {
             this.id = id;
@@ -100,6 +122,19 @@ public class CourseAction {
             this.classroom_name = classroom_name;
             this.schooltime_id = schooltime_id;
             this.schooltime_desc = schooltime_desc;
+            this.create_time = create_time;
+            this.write_time = write_time;
+        }
+
+        public Course(int id, String name, int classroom_id, String classroom_name, int schooltime_id, String schooltime_desc, int teacher_id, String teacher_name, String create_time, String write_time) {
+            this.id = id;
+            this.name = name;
+            this.classroom_id = classroom_id;
+            this.classroom_name = classroom_name;
+            this.schooltime_id = schooltime_id;
+            this.schooltime_desc = schooltime_desc;
+            this.teacher_id = teacher_id;
+            this.teacher_name = teacher_name;
             this.create_time = create_time;
             this.write_time = write_time;
         }
@@ -167,6 +202,22 @@ public class CourseAction {
         public void setSchooltime_desc(String schooltime_desc) {
             this.schooltime_desc = schooltime_desc;
         }
+
+        public int getTeacher_id() {
+            return teacher_id;
+        }
+
+        public void setTeacher_id(int teacher_id) {
+            this.teacher_id = teacher_id;
+        }
+
+        public String getTeacher_name() {
+            return teacher_name;
+        }
+
+        public void setTeacher_name(String teacher_name) {
+            this.teacher_name = teacher_name;
+        }
     }
 
     /**
@@ -178,8 +229,10 @@ public class CourseAction {
         if (name == null) {
             String sql = "select id, `desc` from s_schooltime";
             String sql2 = "select id, name from s_classroom";
+            String sql3 = "select id, name from s_user where grade = 2";
             ResultSet rs = DB.executeQuery(sql);
             ResultSet rs2 = DB.executeQuery(sql2);
+            ResultSet rs3 = DB.executeQuery(sql3);
             try {
                 schooltimes = new LinkedList<>();
                 while (rs.next()) {
@@ -189,13 +242,17 @@ public class CourseAction {
                 while (rs2.next()) {
                     classrooms.add(new Classroom(rs2.getInt("id"), rs2.getString("name")));
                 }
+                teachers = new LinkedList<>();
+                while (rs3.next()) {
+                    teachers.add(new Teacher(rs3.getInt("id"), rs3.getString("name")));
+                }
                 return "add";
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            String sql = "insert into s_course (name, classroom_id, schooltime_id, create_time) values ('" +
-                    name + "' , " + classroom_id + ", " + schooltime_id + ",'" + Util.getCurrentTime() + "')";
+            String sql = "insert into s_course (name, classroom_id, schooltime_id, teacher_id, create_time) values ('" +
+                    name + "' , " + classroom_id + ", " + schooltime_id + "," + teacher_id + ",'" + Util.getCurrentTime() + "')";
             if (DB.executeUpdate(sql)) {
                 return "addCourse_success";
             } else {
@@ -222,15 +279,18 @@ public class CourseAction {
 //            if (request.containsKey("id")) {
             int id = (int) request.get("id");
 //            String sql = "select * from s_course where id = " + id;
-            String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc from (" +
+            String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc, c.name teacher_name from ((" +
                     "s_course i left join s_classroom a on i.classroom_id = a.id and i.id = " + id + ")" +
-                    "left join s_schooltime b on i.schooltime_id = b.id";
+                    "left join s_schooltime b on i.schooltime_id = b.id)" +
+                    "left join s_user c on c.id = i.teacher_id";
             ResultSet rs = DB.executeQuery(sql);
             if (fill(rs, courses) != null) {
                 String sql3 = "select id, `desc` from s_schooltime";
                 String sql2 = "select id, name from s_classroom";
+                String sql4 = "select id, name from s_user where grade = 2";
                 ResultSet rs3 = DB.executeQuery(sql3);
                 ResultSet rs2 = DB.executeQuery(sql2);
+                ResultSet rs4 = DB.executeQuery(sql4);
                 try {
                     schooltimes = new LinkedList<>();
                     while (rs3.next()) {
@@ -239,6 +299,10 @@ public class CourseAction {
                     classrooms = new LinkedList<>();
                     while (rs2.next()) {
                         classrooms.add(new Classroom(rs2.getInt("id"), rs2.getString("name")));
+                    }
+                    teachers = new LinkedList<>();
+                    while (rs4.next()) {
+                        teachers.add(new Teacher(rs4.getInt("id"), rs4.getString("name")));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -254,6 +318,8 @@ public class CourseAction {
                 sql += "classroom_id = " + classroom_id + ", ";
             if (schooltime_id != 0)
                 sql += "schooltime_id = " + schooltime_id + ", ";
+            if (teacher_id != 0)
+                sql += "teacher_id = " + teacher_id + ", ";
             sql += "write_time = '" + df.format(new Date()) + "'";
             sql += "where id = " + id;
             if (DB.executeUpdate(sql)) {
@@ -293,8 +359,9 @@ public class CourseAction {
     public String get() {
         courses = new LinkedList<>();
 //        String sql = "select * from s_course";
-        String sql = "select i.* , a.name as classroom_name, b.`desc` as schooltime_desc from (s_course i left join" +
-                " s_classroom a on a.id = i.classroom_id) left join s_schooltime b on b.id = i.schooltime_id";
+        String sql = "select i.* , a.name as classroom_name, b.`desc` as schooltime_desc, c.name as teacher_name from ((s_course i left join" +
+                " s_classroom a on a.id = i.classroom_id) left join s_schooltime b on b.id = i.schooltime_id) " +
+                "left join s_user c on c.id = i.teacher_id";
         ResultSet rs = DB.executeQuery(sql);
         if (fill(rs, courses) != null)
             return "getCourse_success";
@@ -310,9 +377,11 @@ public class CourseAction {
                 String classroom_name = rs.getString("classroom_name");
                 int schooltime_id = rs.getInt("schooltime_id");
                 String schooltime_desc = rs.getString("schooltime_desc");
+                int teacher_id = rs.getInt("teacher_id");
+                String teacher_name = rs.getString("teacher_name");
                 String create_time = rs.getString("create_time");
                 String write_time = rs.getString("write_time");
-                list.add(new Course(id, name, classroom_id, classroom_name, schooltime_id, schooltime_desc, create_time, write_time));
+                list.add(new Course(id, name, classroom_id, classroom_name, schooltime_id, schooltime_desc, teacher_id,teacher_name, create_time, write_time));
             }
             return list;
         } catch (SQLException e) {
@@ -407,6 +476,32 @@ public class CourseAction {
 
     public void setSchooltime_desc(String schooltime_desc) {
         this.schooltime_desc = schooltime_desc;
+    }
+
+
+    public int getTeacher_id() {
+        return teacher_id;
+    }
+
+    public void setTeacher_id(int teacher_id) {
+        this.teacher_id = teacher_id;
+    }
+
+    public String getTeacher_name() {
+        return teacher_name;
+    }
+
+    public void setTeacher_name(String teacher_name) {
+        this.teacher_name = teacher_name;
+    }
+
+
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
 }

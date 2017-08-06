@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-08-06 15:29:35
+Date: 2017-08-06 16:36:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,6 +47,7 @@ CREATE TABLE `s_course` (
   `name` varchar(20) DEFAULT NULL,
   `classroom_id` int(11) DEFAULT NULL,
   `schooltime_id` int(11) DEFAULT NULL,
+  `teacher_id` INT(11) DEFAULT NULL ,
   `create_time` varchar(20) DEFAULT NULL,
   `write_time` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -109,19 +110,19 @@ DROP TABLE IF EXISTS `s_user`;
 CREATE TABLE `s_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL DEFAULT '新用户' COMMENT '姓名',
-  `sex` tinyint(4)  DEFAULT 0 COMMENT '0 未知， 1男， 2女， 3保密',
+  `sex` tinyint(4) DEFAULT '0' COMMENT '0 未知， 1男， 2女， 3保密',
   `address` varchar(60) DEFAULT NULL,
   `password` varchar(60) NOT NULL,
-  `grade` int(4) NOT NULL DEFAULT 0 COMMENT '管理员9， 学生1， 教师2',
+  `grade` int(4) NOT NULL DEFAULT '0' COMMENT '管理员9， 学生1， 教师2',
   `phone` varchar(60) DEFAULT NULL,
   `avactor` varchar(60) DEFAULT NULL,
   `create_time` varchar(20) DEFAULT NULL,
   `write_time` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of s_user
 -- ----------------------------
-INSERT INTO `s_user` VALUES ('1', '用户', null, null, '215656226399674922704324606688809822252050151671', '0', '13272408807', null, '2017-08-06 11:03:12', null);
-INSERT INTO `s_user` VALUES ('2', '用户', null, null, '272874517023827102959669599430568608046907545193', '0', '13272408808', null, '2017-08-06 15:09:41', null);
+INSERT INTO `s_user` VALUES ('1', 'xu', '1', 'csu', '215656226399674922704324606688809822252050151671', '9', '13272408807', null, '2017-08-06 11:03:12', '2017-08-06 16:28:00');
+INSERT INTO `s_user` VALUES ('2', 'wq', '2', 'ww', '272874517023827102959669599430568608046907545193', '2', '13272408808', null, '2017-08-06 15:09:41', null);
