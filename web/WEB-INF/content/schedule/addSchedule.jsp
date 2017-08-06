@@ -23,7 +23,7 @@
     </tr>
 <s:iterator value="courseDetails">
     <tr>
-        <td><s:property value="id"/></td>
+        <%--<td><s:property value="id"/></td>--%>
         <td><s:property value="name"/> </td>
         <td><s:property value="teacher_name"/></td>
         <td><s:property value="classroom_name"/> </td>

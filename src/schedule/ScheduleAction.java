@@ -183,16 +183,35 @@ public class ScheduleAction {
         return "error";
     }
 
-    public String modify() {
-        return "error";
-    }
 
     public String get() {
+        int user_id = (int)ActionContext.getContext().getSession().get("user_id");
+        String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc, c.name teacher_name from (((" +
+                "s_schedule d left join s_course i on d.course_id = i.id and d.user_id = "+ user_id +")" +
+                "left join s_classroom a on i.classroom_id = a.id )" +
+                "left join s_schooltime b on i.schooltime_id = b.id)" +
+                "left join s_user c on c.id = i.teacher_id";
+//        String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc, c.name teacher_name from ((" +
+//                "s_course i left join s_classroom a on i.classroom_id = a.id and i.id = "+ user_id +  ")" +
+//                "left join s_schooltime b on i.schooltime_id = b.id)" +
+//                "left join s_user c on c.id = i.teacher_id";
+        courseDetails = new LinkedList<>();
+        ResultSet rs = DB.executeQuery(sql);
+        if (fill(rs, courseDetails) != null) {
+            return "showSchedule";
+        }
         return "error";
     }
 
     public String delete() {
-        return "error";
+        int user_id = (int)ActionContext.getContext().getSession().get("user_id");
+        int course_id = (int) ((Map)ActionContext.getContext().get("request")).get("id");
+        String sql = "delete from s_schedule where user_id = " + user_id + " and course_id = " + course_id;
+        if (DB.executeUpdate(sql)) {
+            return "success";
+        } else {
+            return "error";
+        }
     }
 
     public List<CourseDetail> fill(ResultSet rs, List<CourseDetail> list) {
