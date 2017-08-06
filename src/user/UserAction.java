@@ -148,6 +148,12 @@ public class UserAction extends ActionSupport {
             ActionContext ac = ActionContext.getContext();
             Map session = ac.getSession();
             session.put("phone", phone);
+            String sql = "SELECT * FROM s_user WHERE phone = '" + phone + "' and password = '" + Util.EncoderBySHA(password) + "' ";
+            ResultSet rs = DB.executeQuery(sql);
+            while (rs.next()) {
+                session.put("user_id", rs.getInt("id"));
+                break;
+            }
             return "login_success";
         } else {
             return "login_error";

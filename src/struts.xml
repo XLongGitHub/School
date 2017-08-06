@@ -59,6 +59,12 @@
             <result name="success">success.jsp</result>
             <result name="error">error.jsp</result>
         </action>
+
+        <action name="*ScheduleAction" class="schedule.ScheduleAction" method="{1}">
+            <result name="addSchedule">WEB-INF/content/schedule/addSchedule.jsp</result>
+            <result name="success">success.jsp</result>
+            <result name="error">error.jsp</result>
+        </action>
     </package>
 
 </struts>
