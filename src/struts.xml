@@ -15,15 +15,16 @@
         <action name="*UserAction" class="user.UserAction" method="{1}">
             <result name="login_success">success.jsp</result>
             <result name="login_error">error.jsp</result>
+            <result name="error">error.jsp</result>
             <result name="register_success">success.jsp</result>
             <result name="register_error">error.jsp</result>
             <result name="modify_success">success.jsp</result>
             <result name="modify_error">error.jsp</result>
-            <result name="modify_detail">modifyUser.jsp</result>
-            <result name="users_success">showUser.jsp</result>
+            <result name="modify_detail">WEB-INF/content/user/modifyUser.jsp</result>
+            <result name="users_success">WEB-INF/content/user/showUser.jsp</result>
             <result name="delete_user_success">success.jsp</result>
             <result name="delete_user_error">error.jsp</result>
-            <result name="add">login.jsp</result>
+            <result name="add">WEB-INF/content/user/login.jsp</result>
         </action>
 
         <action name="*CourseAction" class="course.CourseAction" method="{1}">
