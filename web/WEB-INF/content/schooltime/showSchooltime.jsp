@@ -34,7 +34,7 @@
             <td class="time"><s:property value="time"/> </td>
             <td><s:property value="week_start"/> </td>
             <td><s:property value="week_end"/> </td>
-            <td><s:property value="desc"/> </td>
+            <td><s:property value="description"/> </td>
             <td><s:property value="create_time"/> </td>
             <td><s:property value="write_time"/> </td>
             <td>

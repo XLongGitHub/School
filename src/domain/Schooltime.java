@@ -12,19 +12,19 @@ public class Schooltime {
     private int time;
     private int week_start;
     private int week_end;
-    private String desc;
+    private String description;
     private String create_time;
     private String write_time;
 
     public Schooltime() {}
 
-    public Schooltime(int id, int date, int time, int week_start, int week_end, String desc, String create_time, String write_time) {
+    public Schooltime(int id, int date, int time, int week_start, int week_end, String description, String create_time, String write_time) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.week_start = week_start;
         this.week_end = week_end;
-        this.desc = desc;
+        this.description = description;
         this.create_time = create_time;
         this.write_time = write_time;
     }
@@ -69,14 +69,6 @@ public class Schooltime {
         this.week_end = week_end;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getCreate_time() {
         return create_time;
     }
@@ -91,5 +83,13 @@ public class Schooltime {
 
     public void setWrite_time(String write_time) {
         this.write_time = write_time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

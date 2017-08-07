@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <%--<link href="${pageContext.request.contextPath}/css/bootstarp.min.css" rel="stylesheet">--%>
 <table>
     <tr>

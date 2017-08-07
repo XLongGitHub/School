@@ -96,7 +96,7 @@
     <br/>
     <div class="form-group">
         <label>描述</label>
-        <input type="text" id="desc" name="desc" style="width: 600px;">
+        <input type="text" id="description" name="description" style="width: 600px;">
     </div>
 </form>
 
@@ -107,18 +107,18 @@
         var time = document.querySelector("select[name=time]");
         var week_start = document.querySelector("select[name=week_start]");
         var week_end = document.querySelector("select[name=week_end]");
-        var desc = document.getElementById("desc");
-        var descStr = "";
+        var description = document.getElementById("description");
+        var descriptionStr = "";
         form.onclick = function () {
-            descStr = "";
-            descStr += week_start.value;
-            descStr += " -- ";
-            descStr += week_end.value;
-            console.log(descStr);
-            descStr += " " + dateConvert(date.value);
-            console.log(descStr);
-            descStr += " " + timeConvert(time.value);
-            desc.value = descStr;
+            descriptionStr = "";
+            descriptionStr += week_start.value;
+            descriptionStr += " -- ";
+            descriptionStr += week_end.value;
+//            console.log(descriptionStr);
+            descriptionStr += " " + dateConvert(date.value);
+//            console.log(descriptionStr);
+            descriptionStr += " " + timeConvert(time.value);
+            description.value = descriptionStr;
         }
 
         function dateConvert(date) {
