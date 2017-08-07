@@ -61,7 +61,7 @@ public class UserAction extends ActionSupport {
         user.setName("新用户");
         user.setPhone(phone);
         user.setPassword(Util.EncoderBySHA(password));
-        user.setWrite_time(Util.getCurrentTime());
+        user.setCreate_time(Util.getCurrentTime());
 //        userDao.save(user);    此处写重，导致插入两遍
         if (userDao.save(user) != null) {
             return "register_success";

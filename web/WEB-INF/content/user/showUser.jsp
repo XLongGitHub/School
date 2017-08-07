@@ -44,10 +44,10 @@
                 <%--String name, String avactor, String sex, String address, String phone, String grade, String create_time--%>
             <td><s:property value="avactor"/></td>
             <td><s:property value="name"/></td>
-            <td><s:property value="sex"/></td>
+            <td class="sex"><s:property value="sex"/></td>
             <td><s:property value="address"/></td>
             <td><s:property value="phone"/></td>
-            <td><s:property value="grade"/></td>
+            <td class="grade"><s:property value="grade"/></td>
             <td><s:property value="create_time"/></td>
             <td><s:property value="write_time"/></td>
             <td>
@@ -56,6 +56,35 @@
             </td>
         </tr>
     </s:iterator>
+    <script>
+        window.onload = function () {
+            var sex = document.querySelectorAll(".sex");
+            var grade = document.querySelectorAll(".grade");
+            for (let i = 0; i < sex.length; i++) {
+                console.log(i);
+                let text = sex[i].innerText;
+                let str = '';
+                switch (text) {
+                    case '0': str = '未知'; break;
+                    case '1': str = '男' ; break;
+                    case '2': str = '女' ; break;
+                    case '3': str = '保密' ; break;
+                }
+                sex[i].innerText = str;
+            }
+            for (let i = 0; i < grade.length; i++) {
+                let text = grade[i].innerText;
+                let str = '';
+                switch (text) {
+                    case '0': str = '未知' ; break;
+                    case '1': str = '学生' ; break;
+                    case '2': str = '教师'; break;
+                    case '9' : str = '管理员'; break;
+                }
+                grade[i].innerText = str;
+            }
+        }
+    </script>
 </table>
 </body>
 </html>
