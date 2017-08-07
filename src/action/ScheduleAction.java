@@ -1,4 +1,4 @@
-package schedule;
+package action;
 
 import PersonUtil.Util;
 import com.opensymphony.xwork2.ActionContext;

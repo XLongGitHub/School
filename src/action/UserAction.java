@@ -1,9 +1,11 @@
-package user;
+package action;
 
 import PersonUtil.Util;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import dao.UserDaoImpl;
 import database.DB;
+import domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +22,8 @@ public class UserAction extends ActionSupport {
     private String avactor;
     private String address;
     private List<User> users;
+    private UserDaoImpl userDao = new UserDaoImpl();
+
 
 
 
@@ -176,8 +180,14 @@ public class UserAction extends ActionSupport {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String sql = "insert into s_user (phone, password, create_time) values ('" + phone + "' , '" + Util.EncoderBySHA(password) + "' ,'" + df.format(new Date()) + "')";
-        if (DB.executeUpdate(sql)) {
+//        String sql = "insert into s_user (phone, password, create_time) values ('" + phone + "' , '" + Util.EncoderBySHA(password) + "' ,'" + df.format(new Date()) + "')";
+        domain.User user = new domain.User();
+        user.setName("新用户");
+        user.setPhone(phone);
+        user.setPassword(Util.EncoderBySHA(password));
+        user.setWrite_time(Util.getCurrentTime());
+//        userDao.save(user);
+        if (userDao.save(user) != null) {
             return "register_success";
         } else {
             return "register_error";

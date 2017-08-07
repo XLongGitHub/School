@@ -12,7 +12,7 @@
             <!--<result name="success">success.jsp</result>-->
             <!--<result name="error">error.jsp</result>-->
         <!--</action>-->
-        <action name="*UserAction" class="user.UserAction" method="{1}">
+        <action name="*UserAction" class="action.UserAction" method="{1}">
             <result name="login_success">success.jsp</result>
             <result name="login_error">error.jsp</result>
             <result name="error">error.jsp</result>
@@ -27,7 +27,7 @@
             <result name="add">WEB-INF/content/user/login.jsp</result>
         </action>
 
-        <action name="*CourseAction" class="course.CourseAction" method="{1}">
+        <action name="*CourseAction" class="action.CourseAction" method="{1}">
             <result name="add">WEB-INF/content/course/addCourse.jsp</result>
             <result name="addCourse_success">success.jsp</result>
             <result name="addCourse_error">error.jsp</result>
@@ -40,7 +40,7 @@
             <result name="deleteCourse_error">error.jsp</result>
         </action>
 
-        <action name="*ClassroomAction" class="classroom.ClassroomAction" method="{1}">
+        <action name="*ClassroomAction" class="action.ClassroomAction" method="{1}">
             <result name="addClassroom">WEB-INF/content/classroom/addClassroom.jsp</result>
             <result name="addClassroom_success">success.jsp</result>
             <result name="addClassroom_error">error.jsp</result>
@@ -52,7 +52,7 @@
             <result name="modifyClassroom_error">error.jsp</result>
         </action>
 
-        <action name="*SchooltimeAction" class="schooltime.SchooltimeAction" method="{1}">
+        <action name="*SchooltimeAction" class="action.SchooltimeAction" method="{1}">
             <result name="addSchooltime">WEB-INF/content/schooltime/addSchooltime.jsp</result>
             <result name="modifySchooltime">WEB-INF/content/schooltime/modifySchooltime.jsp</result>
             <result name="showSchooltime">WEB-INF/content/schooltime/showSchooltime.jsp</result>
@@ -60,7 +60,7 @@
             <result name="error">error.jsp</result>
         </action>
 
-        <action name="*ScheduleAction" class="schedule.ScheduleAction" method="{1}">
+        <action name="*ScheduleAction" class="action.ScheduleAction" method="{1}">
             <result name="addSchedule">WEB-INF/content/schedule/addSchedule.jsp</result>
             <result name="showSchedule">WEB-INF/content/schedule/showSchedule.jsp</result>
             <result name="success">success.jsp</result>
