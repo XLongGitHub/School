@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import java.io.Serializable;
@@ -19,7 +20,14 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public T get(Class<T> entity, Serializable id) {
-        return getSessionFactory().getCurrentSession().get(entity, id);
+                Session session = getSessionFactory().openSession();
+                Transaction ts = session.beginTransaction();
+                T object = session.get(entity, id);
+                if (ts.getStatus().equals(TransactionStatus.ACTIVE)) {
+                    ts.commit();
+                }
+                session.close();
+                return object;
     }
 
     @Override
@@ -37,21 +45,42 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public void update(T entity) {
-        getSessionFactory().getCurrentSession().update(entity);
+        Session session = getSessionFactory().openSession();
+        Transaction ts = session.beginTransaction();
+        session.update(entity);
+        if (ts.getStatus().equals(TransactionStatus.ACTIVE)) {
+            ts.commit();
+        }
+        session.close();
     }
 
     @Override
     public void delete(T entity) {
-        getSessionFactory().getCurrentSession().delete(entity);
+        Session session = getSessionFactory().openSession();
+        Transaction ts = session.beginTransaction();
+        session.delete(entity);
+        if (ts.getStatus().equals(TransactionStatus.ACTIVE)) {
+            ts.commit();
+        }
+        session.close();
     }
 
     @Override
     public void delete(Class<T> entity, Serializable id) {
-        getSessionFactory().getCurrentSession()
-                .createQuery("delete " + entity.getSimpleName()
-                +" en where  en.id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+        Session session = getSessionFactory().openSession();
+        Transaction ts = session.beginTransaction();
+        Query query = session.createQuery("delete " + entity.getSimpleName() + " en where en.id = :id").setParameter("id", id);
+        query.executeUpdate();
+        if (ts.getStatus().equals(TransactionStatus.ACTIVE)) {
+            ts.commit();
+        }
+        session.close();
+
+//        getSessionFactory().getCurrentSession()
+//                .createQuery("delete " + entity.getSimpleName()
+//                +" en where  en.id = :id")
+//                .setParameter("id", id)
+//                .executeUpdate();
 
     }
 
@@ -61,8 +90,28 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     public List<T> find(String hql) {
-        return getSessionFactory().getCurrentSession()
-                .createQuery(hql).list();
+        Session session = getSessionFactory().openSession();
+        Transaction ts = session.beginTransaction();
+        List<T> list = session.createQuery(hql).list();
+        if (ts.getStatus().equals(TransactionStatus.ACTIVE)) {
+            ts.commit();
+        }
+        session.close();
+        return list;
+
+//        return getSessionFactory().getCurrentSession()
+//                .createQuery(hql).list();
+    }
+
+    public List<T> find(String hql, Object ...args) {
+        Session session = getSessionFactory().openSession();
+        Transaction ts = session.beginTransaction();
+        Query query =  session.createQuery(hql);
+        for (int i = 0; i < args.length; i++) {
+            query.setParameter(i + "", args[i]);
+        }
+        return query.list();
+
     }
 
     public List findMysql(String sql) {

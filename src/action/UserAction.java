@@ -27,101 +27,101 @@ public class UserAction extends ActionSupport {
 
 
 
-    class User {
-        private int id;
-        private String name;
-        private String avactor;
-        private int sex;
-        private int grade;
-        private String address;
-        private String phone;
-        private String create_time;
-        private String write_time;
-
-        public User(int id, String name, String avactor, int sex, int grade, String address, String phone, String create_time, String write_time) {
-            this.id = id;
-            this.name = name;
-            this.avactor = avactor;
-            this.sex = sex;
-            this.grade = grade;
-            this.address = address;
-            this.phone = phone;
-            this.create_time = create_time;
-            this.write_time = write_time;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAvactor() {
-            return avactor;
-        }
-
-        public void setAvactor(String avactor) {
-            this.avactor = avactor;
-        }
-
-        public int getSex() {
-            return sex;
-        }
-
-        public void setSex(int sex) {
-            this.sex = sex;
-        }
-
-        public int getGrade() {
-            return grade;
-        }
-
-        public void setGrade(int grade) {
-            this.grade = grade;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getPhone() {
-            return phone;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
-
-        public String getCreate_time() {
-            return create_time;
-        }
-
-        public void setCreate_time(String create_time) {
-            this.create_time = create_time;
-        }
-
-        public String getWrite_time() {
-            return write_time;
-        }
-
-        public void setWrite_time(String write_time) {
-            this.write_time = write_time;
-        }
-    }
+//    class User {
+//        private int id;
+//        private String name;
+//        private String avactor;
+//        private int sex;
+//        private int grade;
+//        private String address;
+//        private String phone;
+//        private String create_time;
+//        private String write_time;
+//
+//        public User(int id, String name, String avactor, int sex, int grade, String address, String phone, String create_time, String write_time) {
+//            this.id = id;
+//            this.name = name;
+//            this.avactor = avactor;
+//            this.sex = sex;
+//            this.grade = grade;
+//            this.address = address;
+//            this.phone = phone;
+//            this.create_time = create_time;
+//            this.write_time = write_time;
+//        }
+//
+//        public int getId() {
+//            return id;
+//        }
+//
+//        public void setId(int id) {
+//            this.id = id;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getAvactor() {
+//            return avactor;
+//        }
+//
+//        public void setAvactor(String avactor) {
+//            this.avactor = avactor;
+//        }
+//
+//        public int getSex() {
+//            return sex;
+//        }
+//
+//        public void setSex(int sex) {
+//            this.sex = sex;
+//        }
+//
+//        public int getGrade() {
+//            return grade;
+//        }
+//
+//        public void setGrade(int grade) {
+//            this.grade = grade;
+//        }
+//
+//        public String getAddress() {
+//            return address;
+//        }
+//
+//        public void setAddress(String address) {
+//            this.address = address;
+//        }
+//
+//        public String getPhone() {
+//            return phone;
+//        }
+//
+//        public void setPhone(String phone) {
+//            this.phone = phone;
+//        }
+//
+//        public String getCreate_time() {
+//            return create_time;
+//        }
+//
+//        public void setCreate_time(String create_time) {
+//            this.create_time = create_time;
+//        }
+//
+//        public String getWrite_time() {
+//            return write_time;
+//        }
+//
+//        public void setWrite_time(String write_time) {
+//            this.write_time = write_time;
+//        }
+//    }
 
     /**
      * 判断该用户是否存在
@@ -132,12 +132,10 @@ public class UserAction extends ActionSupport {
      */
     public boolean isUser(String phone, String password) {
         String sql = "SELECT * FROM s_user WHERE phone = '" + phone + "' and password = '" + Util.EncoderBySHA(password) + "' ";
-        try {
-            if (DB.executeQuery(sql).next())
+//        String hql = "select * from User u where u.phone = "
+//            if (DB.executeQuery(sql).next())
+            if (userDao.find(sql) != null)
                 return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return false;
     }
 
@@ -315,7 +313,7 @@ public class UserAction extends ActionSupport {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                String avator = rs.getString("avactor");
+                String avactor = rs.getString("avactor");
                 int sex = rs.getInt("sex");
                 int grade = rs.getInt("grade");
                 String address = rs.getString("address");
@@ -323,7 +321,7 @@ public class UserAction extends ActionSupport {
                 String create_time = rs.getString("create_time");
                 String write_time = rs.getString("write_time");
 
-                list.add(new User(id, name, avator, sex, grade, address, phone, create_time, write_time));
+                list.add(new User(id, name, avactor, sex, grade, address, phone, create_time, write_time));
             }
             return list;
         } catch (SQLException e) {

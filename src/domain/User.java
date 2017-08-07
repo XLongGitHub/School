@@ -32,6 +32,18 @@ public class User {
         this.write_time = write_time;
     }
 
+    public User(int id, String name, String avactor, int sex, int grade, String address, String phone, String create_time, String write_time) {
+        this.id = id;
+        this.name = name;
+        this.avactor = avactor;
+        this.sex = sex;
+        this.grade = grade;
+        this.address = address;
+        this.phone = phone;
+        this.create_time = create_time;
+        this.write_time = write_time;
+    }
+
     public int getId() {
         return id;
     }
