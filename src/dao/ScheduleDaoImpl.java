@@ -1,4 +1,6 @@
 package dao;
 
-public class ScheduleDaoImpl {
+import domain.Schedule;
+
+public class ScheduleDaoImpl extends BaseDaoImpl<Schedule>{
 }

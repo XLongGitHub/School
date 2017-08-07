@@ -1,4 +1,6 @@
 package dao;
 
-public class CourseDaoImpl {
+import domain.Course;
+
+public class CourseDaoImpl extends BaseDaoImpl<Course>{
 }
