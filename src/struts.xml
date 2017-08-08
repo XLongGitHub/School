@@ -40,7 +40,7 @@
             <result name="deleteCourse_error">error.jsp</result>
         </action>
 
-        <action name="*ClassroomAction" class="action.ClassroomAction" method="{1}">
+        <action name="*ClassroomAction" class="classroomAction" method="{1}">
             <result name="addClassroom">WEB-INF/content/classroom/addClassroom.jsp</result>
             <result name="addClassroom_success">success.jsp</result>
             <result name="addClassroom_error">error.jsp</result>

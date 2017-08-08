@@ -50,5 +50,14 @@
         </property>
     </bean>
 
-    <bean id="BaseDao" class="dao.BaseDaoImpl" p:sessionFactory-ref="sessionFactory"/>
+    <bean id="baseDao" class="dao.BaseDaoImpl" p:sessionFactory-ref="sessionFactory"/>
+    <bean id="userDao" class="dao.UserDaoImpl" p:sessionFactory-ref="sessionFactory"/>
+    <bean id="classroomDao" class="dao.ClassroomDaoImpl" p:sessionFactory-ref="sessionFactory"/>
+    <bean id="courseDao" class="dao.CourseDaoImpl" p:sessionFactory-ref="sessionFactory"/>
+    <bean id="schooltimeDao" class="dao.SchooltimeDaoImpl" p:sessionFactory-ref="sessionFactory"/>
+    <bean id="scheduleDao" class="dao.ScheduleDaoImpl" p:sessionFactory-ref="sessionFactory"/>
+
+    <bean id="classroomAction" class="action.ClassroomAction" p:classroomDao-ref="classroomDao"/>
+
+
 </beans>

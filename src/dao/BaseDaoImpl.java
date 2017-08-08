@@ -13,10 +13,13 @@ import java.util.List;
 public class BaseDaoImpl<T> implements BaseDao<T> {
     private SessionFactory sessionFactory;
 
-    public BaseDaoImpl() {
-        Configuration conf = new Configuration().configure();
-        sessionFactory = conf.buildSessionFactory();
-    }
+//    public BaseDaoImpl(SessionFactory sessionFactory) {
+//        Configuration conf = new Configuration().configure();
+//        sessionFactory = conf.buildSessionFactory();
+//        this.sessionFactory = sessionFactory;
+//    }
+
+
 
     @Override
     public T get(Class<T> entity, Serializable id) {

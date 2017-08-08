@@ -19,7 +19,8 @@ public class ClassroomAction {
     private String create_time;
     private String write_time;
     private List<Classroom> classrooms;
-    private ClassroomDaoImpl classroomDao = new ClassroomDaoImpl();
+//    private ClassroomDaoImpl classroomDao = new ClassroomDaoImpl();
+    private ClassroomDaoImpl classroomDao;
 
     /**
      * 添加教室信息
@@ -131,5 +132,9 @@ public class ClassroomAction {
 
     public void setEmpty(int empty) {
         this.empty = empty;
+    }
+
+    public void setClassroomDao(ClassroomDaoImpl classroomDao) {
+        this.classroomDao = classroomDao;
     }
 }
