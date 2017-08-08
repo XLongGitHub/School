@@ -38,7 +38,7 @@
             <%--<input type="text" name="schooltime_id" value="" id="schooltime_id" class="form-control"/>--%>
             <select name="schooltime_id">
                 <s:iterator value="schooltimes">
-                    <option value="<s:property value="id"/>"> <s:property value="desc"/> </option>
+                    <option value="<s:property value="id"/>"> <s:property value="description"/> </option>
                 </s:iterator>
             </select>
         </div>

@@ -2,7 +2,12 @@ package action;
 
 import PersonUtil.Util;
 import com.opensymphony.xwork2.ActionContext;
+import dao.*;
 import database.DB;
+import domain.Classroom;
+import domain.Course;
+import domain.Schooltime;
+import domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,90 +25,18 @@ public class CourseAction {
     private String teacher_name;
     private String create_time;
     private String write_time;
-    private List<Course> courses;
+    private List<CourseBean> courseBeans;
     private List<Schooltime> schooltimes;
     private List<Classroom> classrooms;
-    private List<Teacher> teachers;
+    private List<User> teachers;
 
-    class Teacher {
-        private int id;
-        private String name;
+    private SchooltimeDaoImpl schooltimeDao = new SchooltimeDaoImpl();
+    private ClassroomDaoImpl classroomDao = new ClassroomDaoImpl();
+    private UserDaoImpl userDao = new UserDaoImpl();
+    private CourseDaoImpl courseDao = new CourseDaoImpl();
+    private BaseDaoImpl baseDao = new BaseDaoImpl();
 
-        public Teacher(int id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    class Classroom {
-        private int id;
-        private String name;
-
-        public Classroom(int id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    class Schooltime {
-        private int id;
-        private String desc;
-
-        public Schooltime(int id, String desc) {
-            this.id = id;
-            this.desc = desc;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getDesc() {
-            return desc;
-        }
-
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
-    }
-
-    class Course {
+    class CourseBean {
         private int id;
         private String name;
         private int classroom_id;
@@ -115,7 +48,7 @@ public class CourseAction {
         private String create_time;
         private String write_time;
 
-        public Course(int id, String name, int classroom_id, String classroom_name, int schooltime_id, String schooltime_desc, String create_time, String write_time) {
+        public CourseBean(int id, String name, int classroom_id, String classroom_name, int schooltime_id, String schooltime_desc, String create_time, String write_time) {
             this.id = id;
             this.name = name;
             this.classroom_id = classroom_id;
@@ -126,7 +59,7 @@ public class CourseAction {
             this.write_time = write_time;
         }
 
-        public Course(int id, String name, int classroom_id, String classroom_name, int schooltime_id, String schooltime_desc, int teacher_id, String teacher_name, String create_time, String write_time) {
+        public CourseBean(int id, String name, int classroom_id, String classroom_name, int schooltime_id, String schooltime_desc, int teacher_id, String teacher_name, String create_time, String write_time) {
             this.id = id;
             this.name = name;
             this.classroom_id = classroom_id;
@@ -227,39 +160,24 @@ public class CourseAction {
      */
     public String add() {
         if (name == null) {
-            String sql = "select id, `desc` from s_schooltime";
-            String sql2 = "select id, name from s_classroom";
-            String sql3 = "select id, name from s_user where grade = 2";
-            ResultSet rs = DB.executeQuery(sql);
-            ResultSet rs2 = DB.executeQuery(sql2);
-            ResultSet rs3 = DB.executeQuery(sql3);
-            try {
-                schooltimes = new LinkedList<>();
-                while (rs.next()) {
-                    schooltimes.add(new Schooltime(rs.getInt("id"), rs.getString("desc")));
-                }
-                classrooms = new LinkedList<>();
-                while (rs2.next()) {
-                    classrooms.add(new Classroom(rs2.getInt("id"), rs2.getString("name")));
-                }
-                teachers = new LinkedList<>();
-                while (rs3.next()) {
-                    teachers.add(new Teacher(rs3.getInt("id"), rs3.getString("name")));
-                }
-                return "add";
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            String hql = "select schooltime from Schooltime schooltime";
+            String hql2 = "select classroom from Classroom classroom";
+            String hql3 = "select user from User user where user.grade = 2";
+            schooltimes = schooltimeDao.find(hql);
+            classrooms = classroomDao.find(hql2);
+//            System.out.println(classrooms.get(1).getClass().getSimpleName()); //java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to domain.Classroom
+            teachers = userDao.find(hql3);
+            return "add";
         } else {
-            String sql = "insert into s_course (name, classroom_id, schooltime_id, teacher_id, create_time) values ('" +
-                    name + "' , " + classroom_id + ", " + schooltime_id + "," + teacher_id + ",'" + Util.getCurrentTime() + "')";
-            if (DB.executeUpdate(sql)) {
-                return "addCourse_success";
-            } else {
-                return "addCouse_error";
-            }
+            Course course = new Course();
+            course.setName(name);
+            course.setClassroom_id(classroom_id);
+            course.setSchooltime_id(schooltime_id);
+            course.setTeacher_id(teacher_id);
+            course.setCreate_time(Util.getCurrentTime());
+            courseDao.save(course);
+            return "addCourse_success";
         }
-        return "error";
     }
 
 
@@ -270,65 +188,42 @@ public class CourseAction {
      */
     public String modify() {
         Map request = (Map) ActionContext.getContext().get("request");
-        courses = new LinkedList<>();
 //        System.out.println(request.get("id"));
 //        System.out.println(request.containsKey("id"));  //false
 
         if (name == null || name.equals("")) {
             System.out.println("but");
-//            if (request.containsKey("id")) {
             int id = (int) request.get("id");
-//            String sql = "select * from s_course where id = " + id;
-            String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc, c.name teacher_name from ((" +
-                    "s_course i left join s_classroom a on i.classroom_id = a.id and i.id = " + id + ")" +
+//            String sql = "select i.*, a.name classroom_name, b.description schooltime_desc, c.name teacher_name from ((" +
+//                    "s_course i left join s_classroom a on i.classroom_id = a.id and i.id = " + id + ")" +
+//                    "left join s_schooltime b on i.schooltime_id = b.id)" +
+//                    "left join s_user c on c.id = i.teacher_id";
+            String sql = "select i.*, a.name classroom_name, b.description schooltime_desc, c.name teacher_name from ((" +
+                    "(select * from s_course t where t.id = " + id + ") i left join s_classroom a on i.classroom_id = a.id )" +
                     "left join s_schooltime b on i.schooltime_id = b.id)" +
                     "left join s_user c on c.id = i.teacher_id";
+//            baseDao.findMysql(sql);
             ResultSet rs = DB.executeQuery(sql);
-            if (fill(rs, courses) != null) {
-                String sql3 = "select id, `desc` from s_schooltime";
-                String sql2 = "select id, name from s_classroom";
-                String sql4 = "select id, name from s_user where grade = 2";
-                ResultSet rs3 = DB.executeQuery(sql3);
-                ResultSet rs2 = DB.executeQuery(sql2);
-                ResultSet rs4 = DB.executeQuery(sql4);
-                try {
-                    schooltimes = new LinkedList<>();
-                    while (rs3.next()) {
-                        schooltimes.add(new Schooltime(rs3.getInt("id"), rs3.getString("desc")));
-                    }
-                    classrooms = new LinkedList<>();
-                    while (rs2.next()) {
-                        classrooms.add(new Classroom(rs2.getInt("id"), rs2.getString("name")));
-                    }
-                    teachers = new LinkedList<>();
-                    while (rs4.next()) {
-                        teachers.add(new Teacher(rs4.getInt("id"), rs4.getString("name")));
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            courseBeans = new LinkedList<>();
+            if (fill(rs, courseBeans) != null) {
+                String hql = "from Schooltime schooltime";
+                String hql2 = "from Classroom classroom";
+                String hql3 = "from User user where user.grade = 2";
+                schooltimes = schooltimeDao.find(hql);
+                classrooms = classroomDao.find(hql2);
+                teachers = userDao.find(hql3);
                 return "modifyCourse";
             }
-//            }
         } else {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-            String sql = "update s_course set ";
-            sql += "name = '" + name + "', ";
-            if (classroom_id != 0)
-                sql += "classroom_id = " + classroom_id + ", ";
-            if (schooltime_id != 0)
-                sql += "schooltime_id = " + schooltime_id + ", ";
-            if (teacher_id != 0)
-                sql += "teacher_id = " + teacher_id + ", ";
-            sql += "write_time = '" + df.format(new Date()) + "'";
-            sql += "where id = " + id;
-            if (DB.executeUpdate(sql)) {
-                System.out.println("here");
-                return "modifyCourse_success";
-            } else {
-                System.out.println("here");
-                return "modifyCourse_error";
-            }
+            Course course = courseDao.get(Course.class, id);
+            course.setName(name);
+            course.setClassroom_id(classroom_id);
+            course.setSchooltime_id(schooltime_id);
+            course.setTeacher_id(teacher_id);
+            course.setWrite_time(Util.getCurrentTime());
+            courseDao.update(course);
+            return "modifyCourse_success";
         }
         return "error";
     }
@@ -341,14 +236,9 @@ public class CourseAction {
     public String delete() {
         Map request = (Map) ActionContext.getContext().get("request");
 //        if (request.containsKey("id")) {
-        int id = Integer.parseInt((String) request.get("id"));
-        String sql = "delete from s_course where id = " + id;
-        if (DB.executeUpdate(sql)) {
-            return "deleteCourse_success";
-        } else {
-            return "deleteCourse_error";
-        }
-//        }
+        int id = (int) request.get("id");
+        courseDao.delete(Course.class, id);
+        return "deleteCourse_success";
     }
 
     /**
@@ -357,18 +247,17 @@ public class CourseAction {
      * @return
      */
     public String get() {
-        courses = new LinkedList<>();
-//        String sql = "select * from s_course";
-        String sql = "select i.* , a.name as classroom_name, b.`desc` as schooltime_desc, c.name as teacher_name from ((s_course i left join" +
+        courseBeans = new LinkedList<>();
+        String sql = "select i.* , a.name as classroom_name, b.description as schooltime_desc, c.name as teacher_name from ((s_course i left join" +
                 " s_classroom a on a.id = i.classroom_id) left join s_schooltime b on b.id = i.schooltime_id) " +
                 "left join s_user c on c.id = i.teacher_id";
         ResultSet rs = DB.executeQuery(sql);
-        if (fill(rs, courses) != null)
+        if (fill(rs, courseBeans) != null)
             return "getCourse_success";
         return "error";
     }
 
-    public List<Course> fill(ResultSet rs, List<Course> list) {
+    public List<CourseBean> fill(ResultSet rs, List<CourseBean> list) {
         try {
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -381,7 +270,7 @@ public class CourseAction {
                 String teacher_name = rs.getString("teacher_name");
                 String create_time = rs.getString("create_time");
                 String write_time = rs.getString("write_time");
-                list.add(new Course(id, name, classroom_id, classroom_name, schooltime_id, schooltime_desc, teacher_id,teacher_name, create_time, write_time));
+                list.add(new CourseBean(id, name, classroom_id, classroom_name, schooltime_id, schooltime_desc, teacher_id, teacher_name, create_time, write_time));
             }
             return list;
         } catch (SQLException e) {
@@ -438,14 +327,6 @@ public class CourseAction {
         this.write_time = write_time;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
     public List<Schooltime> getSchooltimes() {
         return schooltimes;
     }
@@ -496,12 +377,21 @@ public class CourseAction {
     }
 
 
-    public List<Teacher> getTeachers() {
+    public List<User> getTeachers() {
         return teachers;
     }
 
-    public void setTeachers(List<Teacher> teachers) {
+    public void setTeachers(List<User> teachers) {
         this.teachers = teachers;
     }
 
+
+    public List<CourseBean> getCourseBeans() {
+        return courseBeans;
+    }
+
+    public void setCourseBeans(List<CourseBean> courseBeans) {
+        this.courseBeans = courseBeans;
+    }
+    
 }

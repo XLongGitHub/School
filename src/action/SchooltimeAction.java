@@ -20,8 +20,6 @@ public class SchooltimeAction {
     private int week_end;
     private String create_time;
     private String write_time;
-
-
     private String description;
     private List<Schooltime> schooltimes;
     private SchooltimeDaoImpl schooltimeDao = new SchooltimeDaoImpl();
@@ -57,19 +55,8 @@ public class SchooltimeAction {
             Map request = (Map) ActionContext.getContext().get("request");
             int id = (int) request.get("id");
             schooltimes.add(schooltimeDao.get(Schooltime.class, id));
-                return "modifySchooltime";
+            return "modifySchooltime";
         } else {
-//            String sql = "update s_schooltime set date = " + date + ", time = " + time + ", week_start = " + week_start + ", " +
-//                    "week_end = " + week_end + ", " +
-//                    "description = '" + description +
-//                    "' ,write_time = '" + Util.getCurrentTime() + "' where id = " + id;
-//            if (DB.executeUpdate(sql)) {
-
-
-
-
-
-
             Schooltime schooltime = schooltimeDao.get(Schooltime.class, id);
             schooltime.setDate(date);
             schooltime.setTime(time);
@@ -78,12 +65,8 @@ public class SchooltimeAction {
             schooltime.setDescription(description);
             schooltime.setWrite_time(Util.getCurrentTime());
             schooltimeDao.update(schooltime);
-                return "success";
-//            } else {
-//                return "error";
-//            }
+            return "success";
         }
-//        return "error";
     }
 
     public String delete() {
@@ -193,6 +176,4 @@ public class SchooltimeAction {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
 }

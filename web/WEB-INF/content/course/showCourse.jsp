@@ -27,7 +27,7 @@
         <th>操作</th>
     </tr>
     
-    <s:iterator value="courses">
+    <s:iterator value="courseBeans">
         <tr>
             <td><s:property value="name"/> </td>
             <%--<td><s:property value="classroom_id"/> </td>--%>
