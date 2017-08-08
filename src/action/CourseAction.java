@@ -393,5 +393,5 @@ public class CourseAction {
     public void setCourseBeans(List<CourseBean> courseBeans) {
         this.courseBeans = courseBeans;
     }
-    
+
 }

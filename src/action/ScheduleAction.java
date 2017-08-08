@@ -2,7 +2,9 @@ package action;
 
 import PersonUtil.Util;
 import com.opensymphony.xwork2.ActionContext;
+import dao.ScheduleDaoImpl;
 import database.DB;
+import domain.Schedule;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,63 +20,8 @@ public class ScheduleAction {
     private String write_time;
     private List<Schedule> schedules;
     private List<CourseDetail> courseDetails;
-
-    class Schedule {
-        private int id;
-        private int user_id;
-        private int course_id;
-        private String create_time;
-        private String write_time;
-
-        public Schedule(int id, int user_id, int course_id, String create_time, String write_time) {
-            this.id = id;
-            this.user_id = user_id;
-            this.course_id = course_id;
-            this.create_time = create_time;
-            this.write_time = write_time;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public int getUser_id() {
-            return user_id;
-        }
-
-        public void setUser_id(int user_id) {
-            this.user_id = user_id;
-        }
-
-        public int getCourse_id() {
-            return course_id;
-        }
-
-        public void setCourse_id(int course_id) {
-            this.course_id = course_id;
-        }
-
-        public String getCreate_time() {
-            return create_time;
-        }
-
-        public void setCreate_time(String create_time) {
-            this.create_time = create_time;
-        }
-
-        public String getWrite_time() {
-            return write_time;
-        }
-
-        public void setWrite_time(String write_time) {
-            this.write_time = write_time;
-        }
-    }
-
+    private ScheduleDaoImpl scheduleDao = new ScheduleDaoImpl();
+    
     class CourseDetail {
         private int id;
         private String name;
@@ -160,7 +107,7 @@ public class ScheduleAction {
 
     public String add() {
         if (id <= 0) {
-            String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc, c.name teacher_name from ((" +
+            String sql = "select i.*, a.name classroom_name, b.description schooltime_desc, c.name teacher_name from ((" +
                     "s_course i left join s_classroom a on i.classroom_id = a.id )" +
                     "left join s_schooltime b on i.schooltime_id = b.id)" +
                     "left join s_user c on c.id = i.teacher_id";
@@ -170,31 +117,32 @@ public class ScheduleAction {
                 return "addSchedule";
             }
         } else {
-            int user_id = (int)ActionContext.getContext().getSession().get("user_id");
-            int course_id = (int) ((Map)ActionContext.getContext().get("request")).get("id");
-            String sql = "insert into s_schedule (user_id, course_id, create_time) values" +
-                    "("+user_id+", " + course_id + ", '" + Util.getCurrentTime()+"')";
-            if (DB.executeUpdate(sql)) {
-                return "success";
-            } else {
-                return "error";
-            }
+            int user_id = (int) ActionContext.getContext().getSession().get("user_id");
+            int course_id = (int) ((Map) ActionContext.getContext().get("request")).get("id");
+//            String sql = "insert into s_schedule (user_id, course_id, create_time) values" +
+//                    "("+user_id+", " + course_id + ", '" + Util.getCurrentTime()+"')";
+//            if (DB.executeUpdate(sql)) {
+            Schedule schedule = new Schedule();
+            schedule.setUser_id(user_id);
+            schedule.setCourse_id(course_id);
+            schedule.setCreate_time(Util.getCurrentTime());
+            scheduleDao.save(schedule);
+            return "success";
+//            } else {
+//                return "error";
+//            }
         }
         return "error";
     }
 
 
     public String get() {
-        int user_id = (int)ActionContext.getContext().getSession().get("user_id");
-        String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc, c.name teacher_name from (((" +
-                "s_schedule d left join s_course i on d.course_id = i.id and d.user_id = "+ user_id +")" +
+        int user_id = (int) ActionContext.getContext().getSession().get("user_id");
+        String sql = "select i.*, a.name classroom_name, b.description schooltime_desc, c.name teacher_name from (((" +
+                "s_schedule d left join s_course i on d.course_id = i.id and d.user_id = " + user_id + ")" +
                 "left join s_classroom a on i.classroom_id = a.id )" +
                 "left join s_schooltime b on i.schooltime_id = b.id)" +
                 "left join s_user c on c.id = i.teacher_id";
-//        String sql = "select i.*, a.name classroom_name, b.`desc` schooltime_desc, c.name teacher_name from ((" +
-//                "s_course i left join s_classroom a on i.classroom_id = a.id and i.id = "+ user_id +  ")" +
-//                "left join s_schooltime b on i.schooltime_id = b.id)" +
-//                "left join s_user c on c.id = i.teacher_id";
         courseDetails = new LinkedList<>();
         ResultSet rs = DB.executeQuery(sql);
         if (fill(rs, courseDetails) != null) {
@@ -204,14 +152,15 @@ public class ScheduleAction {
     }
 
     public String delete() {
-        int user_id = (int)ActionContext.getContext().getSession().get("user_id");
-        int course_id = (int) ((Map)ActionContext.getContext().get("request")).get("id");
-        String sql = "delete from s_schedule where user_id = " + user_id + " and course_id = " + course_id;
-        if (DB.executeUpdate(sql)) {
-            return "success";
-        } else {
-            return "error";
-        }
+        int user_id = (int) ActionContext.getContext().getSession().get("user_id");
+        int course_id = (int) ((Map) ActionContext.getContext().get("request")).get("id");
+//        String sql = "delete from s_schedule where user_id = " + user_id + " and course_id = " + course_id;
+        scheduleDao.delete(Schedule.class, id);
+//        if (DB.executeUpdate(sql)) {
+        return "success";
+//        } else {
+//            return "error";
+//        }
     }
 
     public List<CourseDetail> fill(ResultSet rs, List<CourseDetail> list) {
@@ -230,6 +179,7 @@ public class ScheduleAction {
         }
         return null;
     }
+
     public int getId() {
         return id;
     }

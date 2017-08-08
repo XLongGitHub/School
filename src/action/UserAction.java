@@ -29,7 +29,7 @@ public class UserAction extends ActionSupport {
      * @throws Exception
      */
     public String login() throws Exception {
-        String hql = "from User u where u.phone = '" + phone + "' and password = '" + Util.EncoderBySHA(password) + "'";
+        String hql = "from User u where u.phone = '" + phone + "' and u.password = '" + Util.EncoderBySHA(password) + "'";
         List us = userDao.find(hql);
         if (us != null) {
             ActionContext ac = ActionContext.getContext();
