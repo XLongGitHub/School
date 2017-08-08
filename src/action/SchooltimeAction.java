@@ -22,7 +22,8 @@ public class SchooltimeAction {
     private String write_time;
     private String description;
     private List<Schooltime> schooltimes;
-    private SchooltimeDaoImpl schooltimeDao = new SchooltimeDaoImpl();
+    private SchooltimeDaoImpl schooltimeDao;
+
 
     /**
      * 添加课程安排时间
@@ -175,5 +176,9 @@ public class SchooltimeAction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setSchooltimeDao(SchooltimeDaoImpl schooltimeDao) {
+        this.schooltimeDao = schooltimeDao;
     }
 }

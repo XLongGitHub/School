@@ -58,6 +58,11 @@
     <bean id="scheduleDao" class="dao.ScheduleDaoImpl" p:sessionFactory-ref="sessionFactory"/>
 
     <bean id="classroomAction" class="action.ClassroomAction" p:classroomDao-ref="classroomDao"/>
+    <bean id="courseAction" class="action.CourseAction" p:schooltimeDao-ref="schooltimeDao"
+    p:userDao-ref="userDao" p:classroomDao-ref="classroomDao" p:courseDao-ref="courseDao"/>
+    <bean id="scheduleAction" class="action.ScheduleAction" p:scheduleDao-ref="scheduleDao"/>
+    <bean id="schoolAction" class="action.SchooltimeAction" p:schooltimeDao-ref="schooltimeDao"/>
+    <bean id="userAction" class="action.UserAction" p:userDao-ref="userDao"/>
 
 
 </beans>

@@ -20,7 +20,11 @@ public class ScheduleAction {
     private String write_time;
     private List<Schedule> schedules;
     private List<CourseDetail> courseDetails;
-    private ScheduleDaoImpl scheduleDao = new ScheduleDaoImpl();
+    private ScheduleDaoImpl scheduleDao;
+
+    public void setScheduleDao(ScheduleDaoImpl scheduleDao) {
+        this.scheduleDao = scheduleDao;
+    }
 
     class CourseDetail {
         private int id;

@@ -20,7 +20,8 @@ public class UserAction extends ActionSupport {
     private String avactor;
     private String address;
     private List<User> users;
-    private UserDaoImpl userDao = new UserDaoImpl();
+    private UserDaoImpl userDao;
+
 
     /**
      * 用户登陆判断
@@ -208,4 +209,7 @@ public class UserAction extends ActionSupport {
     }
 
 
+    public void setUserDao(UserDaoImpl userDao) {
+        this.userDao = userDao;
+    }
 }

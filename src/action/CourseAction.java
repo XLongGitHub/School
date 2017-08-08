@@ -30,11 +30,27 @@ public class CourseAction {
     private List<Classroom> classrooms;
     private List<User> teachers;
 
-    private SchooltimeDaoImpl schooltimeDao = new SchooltimeDaoImpl();
-    private ClassroomDaoImpl classroomDao = new ClassroomDaoImpl();
-    private UserDaoImpl userDao = new UserDaoImpl();
-    private CourseDaoImpl courseDao = new CourseDaoImpl();
-    private BaseDaoImpl baseDao = new BaseDaoImpl();
+    private SchooltimeDaoImpl schooltimeDao;
+    private ClassroomDaoImpl classroomDao;
+    private UserDaoImpl userDao;
+    private CourseDaoImpl courseDao;
+
+    public void setSchooltimeDao(SchooltimeDaoImpl schooltimeDao) {
+        this.schooltimeDao = schooltimeDao;
+    }
+
+    public void setClassroomDao(ClassroomDaoImpl classroomDao) {
+        this.classroomDao = classroomDao;
+    }
+
+    public void setUserDao(UserDaoImpl userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setCourseDao(CourseDaoImpl courseDao) {
+        this.courseDao = courseDao;
+    }
+//    private BaseDaoImpl baseDao = new BaseDaoImpl();
 
     class CourseBean {
         private int id;
