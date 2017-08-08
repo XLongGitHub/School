@@ -21,7 +21,7 @@ public class ScheduleAction {
     private List<Schedule> schedules;
     private List<CourseDetail> courseDetails;
     private ScheduleDaoImpl scheduleDao = new ScheduleDaoImpl();
-    
+
     class CourseDetail {
         private int id;
         private String name;
@@ -119,18 +119,12 @@ public class ScheduleAction {
         } else {
             int user_id = (int) ActionContext.getContext().getSession().get("user_id");
             int course_id = (int) ((Map) ActionContext.getContext().get("request")).get("id");
-//            String sql = "insert into s_schedule (user_id, course_id, create_time) values" +
-//                    "("+user_id+", " + course_id + ", '" + Util.getCurrentTime()+"')";
-//            if (DB.executeUpdate(sql)) {
             Schedule schedule = new Schedule();
             schedule.setUser_id(user_id);
             schedule.setCourse_id(course_id);
             schedule.setCreate_time(Util.getCurrentTime());
             scheduleDao.save(schedule);
             return "success";
-//            } else {
-//                return "error";
-//            }
         }
         return "error";
     }
@@ -154,13 +148,8 @@ public class ScheduleAction {
     public String delete() {
         int user_id = (int) ActionContext.getContext().getSession().get("user_id");
         int course_id = (int) ((Map) ActionContext.getContext().get("request")).get("id");
-//        String sql = "delete from s_schedule where user_id = " + user_id + " and course_id = " + course_id;
         scheduleDao.delete(Schedule.class, id);
-//        if (DB.executeUpdate(sql)) {
         return "success";
-//        } else {
-//            return "error";
-//        }
     }
 
     public List<CourseDetail> fill(ResultSet rs, List<CourseDetail> list) {
